@@ -1,15 +1,16 @@
 'use strict'
-
+const fs      = require('fs')
+const path    = require('path')
+const ora     = require('ora')
 const Command = require('ronin').Command
-const fs = require('fs')
 const ipfsAPI = require('ipfs-api')
-const path = require('path')
 
 module.exports = Command.extend({
   desc: 'Publish your project',
 
   run: function (name) {
     let configPath
+    console.log('Start deploy to ipfs...')
     try {
       configPath = path.resolve(process.cwd() + '/ipscend.json')
       fs.statSync(configPath)
@@ -24,6 +25,15 @@ module.exports = Command.extend({
       let host = config.provider.host || 'ipfs.infura.io'
       let port = config.provider.port || '5001'
       let opts = config.provider.opts || { protocol:'https' }
+
+      console.table({
+        host: host,
+        port: port,
+        protocol: opts.protocol
+      })
+      
+      const spinner = ora('Deploy...')
+      spinner.start()
 
       const ipfs = ipfsAPI(host, port, opts)
 
