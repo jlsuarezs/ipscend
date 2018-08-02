@@ -31,7 +31,7 @@ module.exports = Command.extend({
         port: port,
         protocol: opts.protocol
       })
-      
+
       const spinner = ora('Deploy...')
       spinner.start()
 
@@ -60,7 +60,8 @@ module.exports = Command.extend({
         const duplicate = config.versions.filter(function (v) {
           return v.hash === hash
         })[0]
-
+        
+        spinner.stop()
         if (duplicate) {
           console.log('This version (' + duplicate.hash + ') has already been published on:', duplicate.timestamp)
           console.log('You can access it by url http://ipfs.io/ipfs/' + duplicate.hash)
