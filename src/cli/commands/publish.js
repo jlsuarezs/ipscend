@@ -42,7 +42,7 @@ module.exports = Command.extend({
         console.log()
 
         let hash = ''
-        for(let k in res){
+        for (let k in res) {
           if (config.path.indexOf(res[k].path) !== -1) {
             hash = res[k].hash
           }
